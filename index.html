@@ -2,131 +2,347 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BEHIND | وراء</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BEHIND | وراء</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: white;
+  background: #06152f;
+  overflow-x: hidden;
+}
+
+.background-lines {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(
+      115deg,
+      transparent 0px,
+      transparent 75px,
+      rgba(0, 90, 190, .12) 76px,
+      transparent 78px
+    );
+  animation: move 12s linear infinite;
+}
+
+@keyframes move {
+  from { background-position: 0 0; }
+  to { background-position: 300px 0; }
+}
+
+header {
+  padding: 25px;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+header span {
+  color: #168cff;
+}
+
+.page {
+  display: none;
+  width: 100%;
+  min-height: 75vh;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.page.active {
+  display: flex;
+}
+
+.panel {
+  width: 100%;
+  max-width: 430px;
+  padding: 30px 24px;
+  border: 1px solid rgba(35, 135, 255, .4);
+  border-radius: 22px;
+  background: rgba(5, 23, 52, .92);
+  box-shadow: 0 0 35px rgba(0, 100, 255, .15);
+  text-align: center;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 1.5;
+}
+
+h1 span {
+  color: #168cff;
+}
+
+p {
+  color: #a9c4e8;
+  line-height: 1.8;
+}
+
+input {
+  width: 100%;
+  padding: 16px;
+  margin: 9px 0;
+  border-radius: 12px;
+  border: 1px solid #174d89;
+  background: #091d3c;
+  color: white;
+  outline: none;
+  font-size: 16px;
+}
+
+input:focus {
+  border-color: #168cff;
+  box-shadow: 0 0 12px #168cff55;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 13px;
+  border: none;
+  border-radius: 12px;
+  background: #087cff;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .25s;
+}
+
+button:hover {
+  background: #2995ff;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px #087cff88;
+}
+
+.secondary {
+  background: transparent;
+  border: 1px solid #168cff;
+}
+
+.status {
+  margin-top: 20px;
+  padding: 18px;
+  background: #0a2850;
+  border-radius: 12px;
+  color: #54aaff;
+}
+
+.application {
+  text-align: right;
+  padding: 16px;
+  margin-top: 15px;
+  border: 1px solid #174d89;
+  border-radius: 12px;
+  background: #091d3c;
+}
+
+.application button {
+  padding: 11px;
+  font-size: 14px;
+}
+
+.reject {
+  background: #a52c42;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #6785aa;
+  font-size: 13px;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="background-lines"></div>
+<div class="background-lines"></div>
 
-  <header class="topbar">
-    <div class="logo">BEHIND <span>| وراء</span></div>
-    <button class="admin-btn" onclick="showPage('login')">
-      دخول الإدارة
+<header>
+  BEHIND <span>| وراء</span>
+</header>
+
+<!-- البداية -->
+<section id="home" class="page active">
+  <div class="panel">
+    <h1>مرحباً بك في<br><span>BEHIND | وراء</span></h1>
+    <p>تقديم الانضمام إلى فريق تطوير لعبة وراء</p>
+
+    <button onclick="showPage('apply')">بدء</button>
+    <button class="secondary" onclick="showPage('adminLogin')">
+      الدخول للإدارة
     </button>
-  </header>
+  </div>
+</section>
 
-  <main>
+<!-- التقديم -->
+<section id="apply" class="page">
+  <div class="panel">
+    <h2>تقديم طلب</h2>
+    <p>اكتب بياناتك لإرسال طلب الانضمام</p>
 
-    <!-- الصفحة الرئيسية -->
-    <section id="home" class="page active">
-      <div class="hero">
-        <div class="game-label">BEHIND DEVELOPMENT TEAM</div>
-        <h1>مرحباً بك في تقديم وبرمجة لعبة <span>وراء</span></h1>
-        <p>انضم إلى فريق تطوير لعبة وراء وكن جزءاً من صناعة التجربة.</p>
+    <input id="name" placeholder="اسمك">
+    <input id="username" placeholder="يوزرك">
+    <input id="age" type="number" placeholder="عمرك">
 
-        <button class="main-btn" onclick="showPage('application')">
-          اضغط للبدء
-        </button>
+    <button onclick="sendApplication()">إرسال الطلب</button>
+    <button class="secondary" onclick="showPage('home')">رجوع</button>
+  </div>
+</section>
 
-        <button class="secondary-btn" onclick="showPage('tracking')">
-          متابعة طلبي
-        </button>
-      </div>
-    </section>
+<!-- حالة الطلب -->
+<section id="result" class="page">
+  <div class="panel">
+    <h2>تم إرسال طلبك!</h2>
+    <p>طلبك وصل إلى الإدارة، انتظر مراجعته.</p>
+    <div class="status" id="userStatus">طلبك قيد المراجعة</div>
+    <button class="secondary" onclick="showPage('home')">الرئيسية</button>
+  </div>
+</section>
 
-    <!-- صفحة التقديم -->
-    <section id="application" class="page">
-      <div class="panel">
-        <h2>طلب الانضمام للفريق</h2>
-        <p>عبّئ البيانات التالية بشكل صحيح.</p>
+<!-- دخول الإدارة -->
+<section id="adminLogin" class="page">
+  <div class="panel">
+    <h2>دخول الإدارة</h2>
+    <input id="adminCode" type="password" placeholder="كود الإدارة">
+    <button onclick="loginAdmin()">دخول</button>
+    <button class="secondary" onclick="showPage('home')">رجوع</button>
+  </div>
+</section>
 
-        <form id="applicationForm">
-          <label>كم عمرك؟</label>
-          <input id="age" type="number" min="13" max="99" required>
+<!-- لوحة الإدارة -->
+<section id="dashboard" class="page">
+  <div class="panel">
+    <h2>لوحة الإدارة</h2>
+    <p>طلبات المتقدمين</p>
+    <div id="applicationsList"></div>
+    <button class="secondary" onclick="showPage('home')">تسجيل الخروج</button>
+  </div>
+</section>
 
-          <label>اسمك</label>
-          <input id="name" type="text" required>
+<footer>BEHIND | OFFICIAL DEVELOPMENT TEAM</footer>
 
-          <label>لماذا قدمت؟</label>
-          <textarea id="reason" rows="4" required></textarea>
+<script>
+let applications = JSON.parse(
+  localStorage.getItem("behindApplications") || "[]"
+);
 
-          <label>يوزرك في تيك توك</label>
-          <input id="tiktok" type="text" required>
+let currentApplication = null;
 
-          <button class="main-btn" type="submit">
-            إرسال الطلب
-          </button>
-        </form>
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+  document.getElementById(id).classList.add("active");
+}
 
-        <button class="back-btn" onclick="showPage('home')">
-          رجوع
-        </button>
-      </div>
-    </section>
+function sendApplication() {
+  const name = document.getElementById("name").value.trim();
+  const username = document.getElementById("username").value.trim();
+  const age = document.getElementById("age").value.trim();
 
-    <!-- متابعة الطلب -->
-    <section id="tracking" class="page">
-      <div class="panel">
-        <h2>متابعة الطلب</h2>
-        <p>أدخل رقم طلبك لمعرفة آخر تحديث.</p>
+  if (!name || !username || !age) {
+    alert("يرجى تعبئة جميع البيانات");
+    return;
+  }
 
-        <input id="trackingId" type="text" placeholder="رقم الطلب">
-        <button class="main-btn" onclick="trackApplication()">
-          متابعة
-        </button>
+  if (Number(age) < 13 || Number(age) > 99) {
+    alert("العمر غير صحيح");
+    return;
+  }
 
-        <div id="trackingResult"></div>
+  currentApplication = {
+    name,
+    username,
+    age,
+    status: "قيد المراجعة"
+  };
 
-        <button class="back-btn" onclick="showPage('home')">
-          رجوع
-        </button>
-      </div>
-    </section>
+  applications.push(currentApplication);
+  saveApplications();
 
-    <!-- دخول الإدارة -->
-    <section id="login" class="page">
-      <div class="panel">
-        <h2>دخول الإدارة</h2>
+  document.getElementById("userStatus").textContent =
+    "طلبك قيد المراجعة";
 
-        <input id="adminEmail" type="email" placeholder="الإيميل">
-        <input id="adminPassword" type="password" placeholder="كلمة المرور">
+  showPage("result");
+}
 
-        <button class="main-btn" onclick="adminLogin()">
-          تسجيل الدخول
-        </button>
+function saveApplications() {
+  localStorage.setItem(
+    "behindApplications",
+    JSON.stringify(applications)
+  );
+}
 
-        <button class="back-btn" onclick="showPage('home')">
-          رجوع
-        </button>
-      </div>
-    </section>
+function loginAdmin() {
+  const code = document.getElementById("adminCode").value;
 
-    <!-- لوحة الإدارة -->
-    <section id="dashboard" class="page">
-      <div class="panel">
-        <h2>لوحة الإدارة</h2>
-        <p>طلبات المتقدمين</p>
+  if (code === "9877") {
+    showDashboard();
+    showPage("dashboard");
+  } else {
+    alert("كود الإدارة غير صحيح");
+  }
+}
 
-        <div id="applicationsList"></div>
+function showDashboard() {
+  const list = document.getElementById("applicationsList");
+  list.innerHTML = "";
 
-        <button class="back-btn" onclick="adminLogout()">
-          تسجيل الخروج
-        </button>
-      </div>
-    </section>
+  if (applications.length === 0) {
+    list.innerHTML = "<p>لا توجد طلبات حالياً</p>";
+    return;
+  }
 
-  </main>
+  applications.forEach((app, index) => {
+    const item = document.createElement("div");
+    item.className = "application";
 
-  <footer>
-    BEHIND | وَرَاء
-    <p>Official Development Team</p>
-  </footer>
+    const info = document.createElement("p");
+    info.textContent =
+      "الاسم: " + app.name +
+      " | اليوزر: " + app.username +
+      " | العمر: " + app.age +
+      " | الحالة: " + app.status;
 
-  <script type="module" src="app.js"></script>
+    const accept = document.createElement("button");
+    accept.textContent = "قبول";
+    accept.onclick = () => updateStatus(index, "تم قبول طلبك");
+
+    const reject = document.createElement("button");
+    reject.textContent = "رفض";
+    reject.className = "reject";
+    reject.onclick = () => updateStatus(index, "تم رفض طلبك");
+
+    const pending = document.createElement("button");
+    pending.textContent = "انتظار";
+    pending.className = "secondary";
+    pending.onclick = () => updateStatus(index, "قيد المراجعة");
+
+    item.append(info, accept, reject, pending);
+    list.appendChild(item);
+  });
+}
+
+function updateStatus(index, status) {
+  applications[index].status = status;
+  saveApplications();
+  showDashboard();
+}
+</script>
 
 </body>
 </html>
